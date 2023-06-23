@@ -1,7 +1,0 @@
-#include <csse2310a4.h>
-#include <stdlib.h>
-#include <stdio.h>
-
-int main(int argc, char** argv) {
-    printf("I'm the server code\n");
-}
