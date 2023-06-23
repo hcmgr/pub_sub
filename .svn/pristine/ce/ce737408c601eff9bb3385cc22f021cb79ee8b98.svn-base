@@ -1,0 +1,49 @@
+#include <csse2310a4.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+//server error codes
+enum ErrorCodes {
+    SUCCESS,
+    USAGE_ERROR,
+    PORTNUM_ERROR
+};
+
+/* Defines the Parameters structure which holds the following command line
+ * arguments given to psserver:
+ *      
+ *      connections - maximum number of concurrent connections to server
+ *                    permitted
+ *      portnum - (optional) indicates which localhost psserver is to listen on
+ * */
+typedef struct { 
+    int connections;
+    int portnum;
+} Parameters;
+
+/* general_error
+ * -------------
+ * For a given error (encoded by 'errorCode'), print out a descrptive message
+ * and exit with the appropriate code.
+ *
+ * errorCode - encodes the specific error being handled
+ * */
+void general_error(int errorCode) {
+    switch (errorCode) {
+        case USAGE_ERROR:
+            fprintf(stderr, "Usage: psserver, connections [portnum]\n");
+            exit(USAGE_ERROR);
+        case PORTNUM_ERROR:
+            fprintf(stderr, "psserver: unable to open socket for listening\n");
+            exit(PORTNUM_ERROR);
+    }
+    return;
+}
+
+Parameters parse_command_line(int argc, char** argv) {
+
+
+}
+
+int main(int argc, char** argv) {
+}

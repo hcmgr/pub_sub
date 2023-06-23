@@ -1,0 +1,81 @@
+//clientList.h//
+//----------------------//
+//This file abstracts away the functionality associated with the linked list 
+//of clients that the server uses.
+//----------------------//
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+#ifndef CLIENT_LIST
+#define CLIENT_LIST
+
+/* Defines the Client structure which holds all relevant information about
+ * a client. Client structures are stored in linked lists with other Client's
+ * depending on their topics. 
+ *
+ *      name - name client gave themself
+ *      clientToServer - read end (from server's point of view) of socket
+ *      serverToClient - write end (from client's point of view) of socket
+ *      topics - string array holding the topics the client has specified
+ *
+ * */
+typedef struct { 
+    char* name;
+    FILE* clientToServer;
+    FILE* serverToClient;
+    char** topics;
+} Client;
+
+Client* create_client(char* name, FILE* clientToServer, FILE* serverToClient);
+
+void print_client(Client* client);
+
+/* Defines the ListItem structure which is what we store in our linked list
+ * of clients who follow the same topic.
+ *
+ *      client - pointer to client we're storing
+ *      next - next client in the list
+ * */
+typedef struct ListItem ListItem;
+
+struct ListItem {
+    Client* client;
+    struct ListItem* next;
+};
+
+ListItem* init_client_list(Client* client, bool placeholder);
+
+
+/* add_client
+ * ----------
+ * Adds the given client to the given linked list of clients.
+ *
+ * head - head of linked list 
+ * client - pointer client to add
+ *
+ * */
+void add_client(ListItem* head, Client* client);
+
+/* remove_client
+ * -------------
+ * Removes the given client from the given linked list of clients.
+ *
+ * head - head of linked list
+ * client - pointer to client to remove
+ *
+ * Returns:
+ *      if client was THE HEAD of the list, returns pointer to the NEW
+ *      HEAD, which is just a placeholder ListItem with no client
+ *
+ *      if client is in the list, but isn't the head 
+ *      returns pointer to the head of the new linked list
+ *
+ *      else, returns NULL (client not in list)
+
+ * */
+ListItem* remove_client(ListItem* head, Client* client);
+
+#endif //CLIENT_LIST

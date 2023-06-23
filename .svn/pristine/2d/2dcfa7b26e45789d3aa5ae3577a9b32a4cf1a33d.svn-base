@@ -1,0 +1,91 @@
+//#include <csse2310a4.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+
+//helpful constants
+#define NAME_ERROR 1
+#define TOPICS_ERROR 2
+
+/* Defines the Parameters structure which holds the following command line
+ * arguments given to psclient:
+ *
+ *      portnum - port to connect to that psserver is listening on
+ *      clientName - name to be associated with the client
+ *      topics - list of topics client wishes to subsribe to (optional)
+ * */
+typedef struct {
+    int portnum;
+    char* clientName;
+    char** topics;
+} Parameters;
+
+//client error codes
+enum ExitCodes {
+    SUCCESS,
+    NUM_ARGS_ERROR,
+    NAME_OR_TOPICS_ERROR,
+    PORT_ERROR,
+    CONNECTION_CLOSED
+};
+
+/* general_error
+ * -------------
+ * For a given error (encoded by 'errorCode'), print out a descriptive
+ * message and exit with the appropriate code.
+ *
+ * errorCode - encodes the specific error being handled
+ * extraInfo - general string that used to make error messages more 
+ *             specialised/descriptive (eg: port number unable to connect to)
+ * nameOrTopics - 1 if handling a 'name' error, 2 if handling a 'topics' error,
+ *                0 (NULL) otherwise (necessary because these errors have 
+ *                the same exit code)
+ *
+ * */
+void general_error(int errorCode, char* extraInfo, int nameOrTopics) {
+    switch(errorCode) {
+        //insufficient command line args
+        case NUM_ARGS_ERROR:
+            fprintf(stderr, "Usage: psclient portnum name [topic] ...\n");
+            exit(NUM_ARGS_ERROR);
+        case NAME_OR_TOPICS_ERROR:
+            //invalid name argument
+            if (nameOrTopics == NAME_ERROR) {
+                fprintf(stderr, "psclient: invalid name\n");
+            }
+            //invalid topics argument(s)
+            if (nameOrTopics == TOPICS_ERROR) {
+                fprintf(stderr, "psclient: invalid topic\n");
+            }
+            exit(NAME_OR_TOPICS_ERROR);
+        //unable to connect to the given port
+        case PORT_ERROR:
+            fprintf(stderr, "psclient: unable to connect to port %s\n",
+                    extraInfo);
+            exit(PORT_ERROR);
+        //network connection to server closed
+        case CONNECTION_CLOSED:
+            fprintf(stderr, "psclient: server connection terminated\n");
+            exit(CONNECTION_CLOSED);
+    }
+    return;
+}
+
+//Parameters parse_command_line(int argc, char** argv) {
+//    return;
+//}
+
+int main(int argc, char** argv) {
+
+
+
+}
+
+
+
+
+
+
+
+
+

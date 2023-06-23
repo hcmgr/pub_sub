@@ -1,0 +1,39 @@
+CC=gcc
+FLAGS=-g -pedantic -Wall -std=gnu99
+LIB_STRING_MAP_LIB=-L/local/courses/csse2310/lib -lstringmap
+A4_HEADER=-I/local/courses/csse2310/include
+A4_LIB=-L/local/courses/csse2310/lib -lcsse2310a4
+A3_LIB=-L/local/courses/csse2310/lib -lcsse2310a3
+PTHREAD=-pthread
+LIB_STRING_FLAGS=FLAGS += -fPIC
+LIB_STRING_HEADER=I/local/courses/csse2310/include
+
+all: client server
+
+client: client.c shared.o
+	$(CC) $(FLAGS) $(A4_HEADER) $(A4_LIB) ${A3_LIB} $(PTHREAD) \
+	    -o psclient $^ 
+
+server: server.c clientList.c shared.o 
+	$(CC) $(FLAGS) $(A4_HEADER) $(A4_LIB) $(A3_LIB) $(PTHREAD) \
+	$(LIB_STRING_MAP_LIB) \
+	    -o psserver $^ 
+
+shared.o: shared.c shared.o
+
+stringmap.o: stringmap.c
+	$(CC) $(LIB_STRING_FLAGS) $(LIB_STRING_HEADER) \
+	-c $<
+
+libstringmap.so: stringmap.o
+	$(CC) -shared -o $@ stringmap.o
+
+clean:
+	rm psclient
+	rm psserver
+	rm shared.o
+	rm a.out
+	
+
+
+
