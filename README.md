@@ -1,4 +1,4 @@
-# Command-line Message App
+# Command-line messaging app
 
 Chat app writtein in C, allowing users to communicate with their friends directly from the command-line
 
