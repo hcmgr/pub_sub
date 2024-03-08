@@ -1,9 +1,9 @@
-# Pub-Sub C project
+# Command-line Message App
 
-This project is a classic publish-subscribe system implemented in C as part of a systems programming course I took at university. The system uses the pthread library to implement a multi-threaded HTTP server to serve clients. 
+Chat app writtein in C, allowing users to communicate with their friends directly from the command-line
 
 ## Features
 
-- Publish-Subscribe: The system allows clients to subscribe to topics and receive published messages related to those topics.
-- HTTP Server: The project includes an HTTP server implemented in C, which uses multithreading to handle multiple client connections concurrently.
+- Utilises C's pthread's library to implement a multi-threaded web server
+- Implements a custom client-server communication protocol over raw TCP sockets
 - User Statistics: The system tracks and accumulates statistics on current users, providing insights into user activity and usage patterns.
